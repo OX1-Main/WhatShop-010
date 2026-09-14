@@ -69,7 +69,12 @@ if (window.caches && caches.keys) {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCookieBanner);
   else initCookieBanner();
 })();
-/* ===== OX1 tienda (bloqueo via panel central) ===== */
+
+/* ===== OX1 tienda (bloqueo via panel central) =====
+   Valores por despliegue (OX1Dashboard > Stores). wsStoreId distinto
+   por tienda (esta = 1). El gate bloquea si la central dice offline.
+   Para tienda nueva: registrar sucursal en el panel CENTRAL antes de
+   desplegar, si no queda bloqueada. */
 const WS_STORE_ID = 2;
 const WS_STORE_NAME = 'WhatShop-010';
 window.OX1_WSTORE = {
@@ -81,10 +86,9 @@ window.OX1_WSTORE = {
 };
 
 /* ===== CDN de imagenes (Cloudflare Worker) =====
-   Opcional. Si lo defines, las imagenes publicas se sirven desde tu
-   Worker de Cloudflare (que cachea y reenvia a Supabase una sola vez),
-   ahorrando egress/banda de Supabase. Deja null para servir directo.
-Ejemplo: 'https://img-mitienda.workers.dev' (sin barra final). */
+   Las imagenes publicas se sirven desde el Worker de Cloudflare, que
+   cachea y reenvia a Supabase una sola vez -> 0 egress en visitas
+   repetidas. NO usar barra final. */
 window.IMG_CDN = 'https://shiny-scene-c37d.contactservice-ox1.workers.dev';
 
 /* ===== OX1 keep-alive (mantener la BD activa) =====

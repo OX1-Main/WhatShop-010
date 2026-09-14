@@ -168,8 +168,16 @@ const SBHelper = {
     const c = await loadSupabase();
     const sid = storeId || getActiveStoreId();
     const { data, error } = await c.from('settings').select('data').eq('store_id', sid).single();
-    if (error) throw error;
-    return data ? data.data : null;
+    if (!error) return data ? data.data : null;
+    // Store sin fila de settings: crearla de forma lazy y devolver null
+    // para que el admin/tienda usen los defaults (los campos del HTML).
+    if (error.code === 'PGRST116') {
+      try {
+        await c.from('settings').upsert({ store_id: sid, data: {}, updated_at: new Date() }, { onConflict: 'store_id' });
+      } catch (e) {}
+      return null;
+    }
+    throw error;
   },
   async saveSettings(data, storeId) {
     const c = await loadSupabase();
