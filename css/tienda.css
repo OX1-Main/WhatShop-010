@@ -822,6 +822,11 @@ html, body {
   border-top: 1px solid var(--border-c);
   background: var(--card-bg);
   padding: 32px 16px 24px;
+  /* Footer a todo lo ancho del viewport aunque el contenedor mida 1200px.
+     El box-shadow estirado pinta la franja del borde de la pagina y el
+     clip-path la recorta a la altura del footer, sin desborde ni scrollbar. */
+  box-shadow: 0 0 0 999vmax var(--card-bg);
+  clip-path: inset(0 -999vmax 0 -999vmax);
 }
 
 .footer-inner {

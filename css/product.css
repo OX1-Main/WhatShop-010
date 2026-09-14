@@ -1,6 +1,7 @@
 /* OX WhatShop - Pagina de producto (movil compacto) */
 
-.product-page { max-width: 1200px; margin: 0 auto; padding: 16px 16px 0; width: 100%; box-sizing: border-box; }
+.product-page { max-width: 1200px; margin: 0 auto; padding: 16px 16px 0; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; min-height: 100vh; }
+.product-page .shop-footer { margin-top: auto; }
 .p-back { display: inline-flex; align-items: center; gap: 6px; color: var(--secondary-text); background: none; border: none; font-size: .9rem; cursor: pointer; padding: 6px 10px; border-radius: 8px; margin-bottom: 16px; }
 .p-back:hover { background: var(--color-muted); }
 
