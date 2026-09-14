@@ -42,6 +42,8 @@ html, body {
 
 .shop-page {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--bg);
   color: var(--primary-text);
   font-family: var(--font-body);
@@ -815,16 +817,19 @@ html, body {
   color: #FCD34D;
 }
 
-/* ---------- Footer ---------- */
+/* ---------- Footer (compacto: una barra fina al pie) ---------- */
 
 .shop-footer {
-  margin-top: 40px;
+  margin-top: auto;          /* empuja el footer al borde inferior de la pagina */
   border-top: 1px solid var(--border-c);
   background: var(--card-bg);
-  padding: 32px 16px 24px;
-  /* Footer a todo lo ancho del viewport aunque el contenedor mida 1200px.
-     El box-shadow estirado pinta la franja del borde de la pagina y el
-     clip-path la recorta a la altura del footer, sin desborde ni scrollbar. */
+  padding: 0 16px;
+  min-height: 4rem;
+  display: flex;
+  align-items: center;
+  /* Barra a todo lo ancho del viewport aunque el contenedor mida 1200px:
+     el box-shadow estirado pinta la franja y el clip-path la recorta a la
+     altura del footer, sin desborde ni scrollbar. */
   box-shadow: 0 0 0 999vmax var(--card-bg);
   clip-path: inset(0 -999vmax 0 -999vmax);
 }
@@ -832,36 +837,40 @@ html, body {
 .footer-inner {
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  font-size: 0.8rem;
 }
 
 .footer-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
-.footer-brand img { width: 40px; height: 40px; object-fit: contain; }
+.footer-brand img { width: 26px; height: 26px; object-fit: contain; }
 .footer-brand .what { color: var(--primary-text); }
 .footer-brand .shop { color: var(--brand-green, #16A34A); }
 
 .footer-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
+  gap: 4px 16px;
 }
 
 .footer-links a {
   color: var(--secondary-text);
   text-decoration: none;
-  font-size: 0.85rem;
-  padding: 8px 4px;
-  min-height: 40px;
+  font-size: 0.8rem;
+  padding: 4px 2px;
+  min-height: 28px;
   display: inline-flex;
   align-items: center;
 }
@@ -869,19 +878,12 @@ html, body {
 .footer-links a:hover { color: var(--primary-text); }
 
 .footer-copy {
-  grid-column: 1 / -1;
-  border-top: 1px solid var(--border-c);
-  padding-top: 16px;
   color: var(--secondary-text);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
+  gap: 6px 16px;
   align-items: center;
-}
-
-@media (min-width: 640px) {
-  .footer-inner { grid-template-columns: 1fr 2fr; }
 }
 
 /* ---------- Animaciones ---------- */
@@ -1085,8 +1087,7 @@ html, body { max-width: 100%; overflow-x: clip; }
 .filter-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12); border-color: var(--color-primary, #171717); }
 .filter-toggle:active { transform: translateY(0); box-shadow: none; }
 .explore-layout { display: block; }
-.explore-content { min-height: calc(100vh - 90px); display: flex; flex-direction: column; }
-.explore-content .shop-footer { margin-top: auto; }
+.explore-content { display: flex; flex-direction: column; }
 .explore-content .pagination { flex-shrink: 0; }
 .filter-panel { display: none; background: transparent; border: none; border-radius: var(--radius); padding: 16px; margin-bottom: 16px; font-family: var(--font-body); scrollbar-width: none; }
 .filter-panel::-webkit-scrollbar { display: none; }
