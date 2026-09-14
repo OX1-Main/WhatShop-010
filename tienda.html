@@ -226,8 +226,8 @@
 
   <div class="toast" id="toast" role="status"></div>
 
-<script src="./config.js?v=42"></script>
-<script src="./js/supabase.js?v=47"></script>
+<script src="./config.js?v=43"></script>
+<script src="./js/supabase.js?v=48"></script>
 <script src="./js/cart.js?v=46"></script>
 <script src="./js/ox1-license.js?v=1"></script>
 <script src="./js/ox1-gate.js?v=7"></script>
@@ -327,9 +327,14 @@
     applyThemeMode(localStorage.getItem('whatshop_theme') === 'dark' ? 'dark' : 'light');
 
     // ===== Cache UI: aplicar tema/logo/nombre de inmediato (sin flash) =====
+    // 3 tiendas comparten el mismo origin (ox1-main.github.io/WhatShop-0XX),
+    // asi que la clave lleva el store_id: el tema de una NO se filtra a otra.
+    // La clave antigua compartida (whatshop_ui_cache) se limpia una sola vez.
     var uiCache = null;
-    try { uiCache = JSON.parse(localStorage.getItem('whatshop_ui_cache') || 'null'); } catch (e) {}
-    if (uiCache) {
+    var uiSid = getActiveStoreId();
+    localStorage.removeItem('whatshop_ui_cache');
+    try { uiCache = JSON.parse(localStorage.getItem('whatshop_ui_cache_' + uiSid) || 'null'); } catch (e) {}
+    if (uiCache && uiCache.storeId === uiSid) {
       if (uiCache.theme) applyTheme(uiCache.theme);
       if (uiCache.showBanner === false) {
         var pb0 = document.querySelector('.promo-banner');
@@ -424,7 +429,9 @@
         document.getElementById('footer-brand-name').textContent = name;
         document.getElementById('footer-year').textContent = new Date().getFullYear();
         try {
-          localStorage.setItem('whatshop_ui_cache', JSON.stringify({
+          localStorage.removeItem('whatshop_ui_cache');
+          localStorage.setItem('whatshop_ui_cache_' + getActiveStoreId(), JSON.stringify({
+            storeId: getActiveStoreId(),
             theme: settings.theme || null,
             logo: (settings.landing && settings.landing.logo) || null,
             bannerImage: (settings.landing && settings.landing.bannerImage) || null,

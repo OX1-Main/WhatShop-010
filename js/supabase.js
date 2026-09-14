@@ -57,12 +57,18 @@ function applyTheme(settings) {
     '--card-shadow': t.cardShadow === 'none' ? 'none' : (t.cardShadow === 'media' ? '0 4px 16px rgba(0, 0, 0, 0.10)' : '0 2px 12px rgba(0, 0, 0, 0.08)')
   };
   for (const [key, value] of Object.entries(map)) {
-    if (value) root.setProperty(key, value);
+    // Valor vacio/inexistente => quitar la variable CSS para que el tema de
+    // otra tienda (mismo origin) no quede heredado.
+    if (value === undefined || value === null || value === '') root.removeProperty(key);
+    else root.setProperty(key, value);
   }
   if (t.fontHeading) {
     root.setProperty('--font-heading', `'${t.fontHeading}', system-ui, sans-serif`);
     root.setProperty('--font-body', `'${t.fontHeading}', system-ui, sans-serif`);
     injectFont(t.fontHeading);
+  } else {
+    root.removeProperty('--font-heading');
+    root.removeProperty('--font-body');
   }
 }
 

@@ -77,6 +77,12 @@ if (window.caches && caches.keys) {
    desplegar, si no queda bloqueada. */
 const WS_STORE_ID = 2;
 const WS_STORE_NAME = 'WhatShop-010';
+/* const a nivel tope NO crea propiedad en window; el resto del codigo
+   (supabase.js/gate/tienda) lee window.WS_STORE_ID, asi que lo exponemos
+   explicitamente. Sin esto, getActiveStoreId() cae a localStorage (que es
+   compartido entre tiendas por el mismo origin) y todas leen/escriben la MISA tienda. */
+window.WS_STORE_ID = WS_STORE_ID;
+window.WS_STORE_NAME = WS_STORE_NAME;
 window.OX1_WSTORE = {
   centralUrl: 'https://wufzqynbhvfbzlmqnvgw.supabase.co',
   centralKey: 'sb_publishable_MLdr8wFcc2vG9npNtUg38g_Dg_uxodE',
